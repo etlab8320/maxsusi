@@ -42,7 +42,8 @@ try {
     var toggle = host.querySelector('#toggleSidebar');
     if (toggle) {
       toggle.addEventListener('click', function () {
-        document.body.classList.toggle('sidebar-collapsed');
+        var shell = document.getElementById('appShell') || document.querySelector('.app-shell');
+        if (shell) shell.classList.toggle('collapsed');
       });
     }
 
@@ -81,14 +82,15 @@ try {
 
       var yearBox = host.querySelector('#sidebarYearCombo');
       if (yearBox && typeof window.createCombobox === 'function') {
+        var currentYear = window.SUSI_YEAR || '26';
         window.createCombobox(yearBox, {
           searchable: false,
-          value: window.SUSI_YEAR || '26',
+          value: currentYear,
           placeholder: '연도',
           options: [
-            { value: '26', label: '26학년도' },
-            { value: '27', label: '27학년도' },
-            { value: '28', label: '28학년도' },
+            { value: '28', label: '28학년도', meta: '2028' },
+            { value: '27', label: '27학년도', meta: '2027' },
+            { value: '26', label: '26학년도', meta: '현재' },
           ],
           onChange: function (v) {
             if (window.setSusiYear && window.setSusiYear(v)) {
@@ -96,6 +98,17 @@ try {
             }
           },
         });
+        // collapsed 모드 전용 미니 뷰 (큰 연도 숫자 + 작은 캘린더 아이콘)
+        var yearDisplay = yearBox.querySelector('.combo-display');
+        if (yearDisplay && !yearDisplay.querySelector('.collapsed-view')) {
+          var cv = document.createElement('span');
+          cv.className = 'collapsed-view';
+          cv.innerHTML = '<i class="ph-light ph-calendar"></i><span class="year-chip">' + currentYear + '</span>';
+          yearDisplay.appendChild(cv);
+        }
+        // 사이드바 data-tooltip 을 현재 연도로 보강
+        var tooltipHost = host.querySelector('.sidebar-year');
+        if (tooltipHost) tooltipHost.setAttribute('data-tooltip', '연도 전환 · 현재 ' + currentYear);
       }
     } catch (e) { console.warn('[sidebar user inject]', e); }
   }

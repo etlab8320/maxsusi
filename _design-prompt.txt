@@ -1,0 +1,50 @@
+# 맥스수시엔진 — 사이드바 상단 연도 셀렉터 UX 디자인 작업
+
+## 맥락
+- 프로젝트: `26maxsusi` (수시 모집 관리 프론트). 정시엔진(maxjungsi222)과 동일 Teal/Stone 토큰 100% 재사용.
+- Phase 1 공용 골격 이식 끝. 정시 assets/ 그대로 복사 + 수시 전용 조정 완료.
+- 연도(26/27/28)는 수시만의 고유 요소 — 정시 사이드바에는 없던 UI가 새로 추가됨.
+- 현재 위치: 사이드바 `brand-head` 바로 아래, 네비 그룹 바로 위.
+
+## 현재 문제 (브라우저에서 확인됨)
+1. **콤보 드롭다운 겹침** — 연도 버튼 클릭 시 열리는 `.combo-menu` 가 아래 "대시보드" nav-item 위로 제대로 떠야 하는데 가려지거나 겹쳐 보임 (z-index / positioning 문제 추정).
+2. **"연도" 라벨 치우침** — `<label><i ph-calendar></i><span>연도</span></label>` 가 왼쪽에 납작하게 붙어있고 콤보와 시각적 균형이 안 맞음.
+
+## 원하는 결과
+사이드바 상단에 들어가는 **연도 전환 콤보**가 깔끔하게 자리잡도록. 다음 세 방향 중 가장 나은 것 선택 (또는 더 좋은 안):
+- (A) 현재 위치 유지 + 드롭다운 z-index/위치 고정해서 겹침 해소 + 라벨 가로 정렬
+- (B) 브랜드 헤더 영역(`.sidebar-head`)에 인라인으로 이동 — 브랜드명 옆에 작은 year chip
+- (C) 네비 영역 밖, 푸터(유저 정보 위)로 이동
+
+collapsed 상태(68px 폭)에서도 동작해야 함. 다크/라이트 모두.
+
+## 파일 경로 (맥미니 로컬)
+
+| 역할 | 경로 |
+|---|---|
+| 현재 사이드바 마크업 | `/Users/etlab/projects/26maxsusi/assets/sidebar.html` |
+| 사이드바 CSS (수시 전용 블록은 파일 말미) | `/Users/etlab/projects/26maxsusi/assets/css/sidebar.css` |
+| 콤보 CSS (정시 원본, 수정 금지) | `/Users/etlab/projects/26maxsusi/assets/css/combobox.css` |
+| 콤보 JS (정시 원본, 수정 금지) | `/Users/etlab/projects/26maxsusi/assets/js/combobox.js` |
+| 콤보 초기화 (수정 가능) | `/Users/etlab/projects/26maxsusi/assets/js/bootstrap.js` (`#sidebarYearCombo` 검색) |
+| 디자인 토큰 | `/Users/etlab/projects/26maxsusi/assets/css/tokens.css` |
+| 라이브 프리뷰 | `http://localhost:3022/_smoke.html` (이미 python http.server 기동 중) |
+| 정시 참조 (비교용) | `/Users/etlab/projects/maxjungsi222/assets/sidebar.html` (연도 UI 없음) |
+
+## 제약
+- **정시 원본 파일 수정 금지**: `combobox.css`, `combobox.js`, 그리고 `sidebar.css` 의 정시 기존 블록은 건드리지 말 것. 수시 전용 추가는 `sidebar.css` 말미의 `/* ── Susi-only: 연도 셀렉터 ── */` 블록 안에서만.
+- **토큰만 사용**: 색상/그림자/radius/easing 전부 `tokens.css` 변수 참조. hard-coded hex 금지.
+- **bootstrap.js**: `createCombobox(...)` 의 옵션(placeholder, searchable 등)은 수정 OK.
+- **sidebar.html**: `.sidebar-year` 블록의 마크업 재구성 OK. 단 `#sidebarYearCombo` 빈 div id 는 유지 (bootstrap.js 가 그 id로 createCombobox 함).
+- collapsed 모드에서 최소한 아이콘이나 축약 뱃지로 연도 인식 가능해야.
+
+## 산출물
+- `sidebar.html` 수정 diff
+- `sidebar.css` Susi-only 블록 수정 diff
+- 필요 시 `bootstrap.js` createCombobox 옵션 diff
+- 확인 스크린샷 (라이트 + 다크 + collapsed)
+
+## 검증
+- `node --check assets/js/*.js` 전부 통과
+- 브라우저 `localhost:3022/_smoke.html` 에서 연도 버튼 클릭 → 드롭다운이 대시보드 nav-item 위로 뜨고 겹치지 않음
+- collapsed 시 연도 인식 가능

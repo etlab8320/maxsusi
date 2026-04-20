@@ -1,0 +1,304 @@
+/* ============================================================
+ * counsel.new.css — 개인 상담 페이지 고유 스타일
+ * 공용 토큰/컴포넌트(tokens/buttons/modal/combobox)는 assets/ 상속.
+ * 원본 counsel.html 의 레이아웃/테이블 비율만 이관. 하드코딩 컬러 금지.
+ * ============================================================ */
+
+/* 페이지 섹션 래퍼 */
+.page-content {
+  padding: 24px 28px 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+.page-title {
+  margin: 4px 0 18px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-soft);
+}
+.panel-scroll { overflow-x: auto; }
+
+.field-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+/* topbar 안쪽 학생 콤보 최소 폭 */
+.ct-student { min-width: 240px; }
+
+/* ===== 대학/학과/전형 3단 콤보 (테이블 셀 내부) =====
+ * 공용 combobox 기본 min-width:220px 를 셀 폭에 맞춰 완화.
+ * 드롭다운은 nav 활성 inset-shadow(1px)와 테이블 위 렌더 위해 z-index 상향. */
+#collegeTable .sel-college,
+#collegeTable .sel-major,
+#collegeTable .sel-type { min-width: 0; width: 100%; }
+#collegeTable .combobox .combo-display { height: 34px; font-size: 13px; }
+#collegeTable .combobox .combo-menu { z-index: 200; min-width: 220px; }
+
+/* 메모 textarea */
+.input-memo {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  resize: vertical;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease);
+}
+.input-memo:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+.save-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+.save-msg { font-size: 13px; color: var(--accent); font-weight: 500; }
+
+/* ============ 대학 테이블 ============ */
+#collegeTable {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+#collegeTable th,
+#collegeTable td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* 열 비율 (원본과 동일) */
+.college-group-header th:nth-child(1),
+#collegeTable td:nth-child(1) { width: 15%; text-align: left; }
+.college-group-header th:nth-child(2),
+#collegeTable td:nth-child(2) { width: 15%; }
+.college-group-header th:nth-child(3),
+#collegeTable td:nth-child(3) { width: 12%; }
+.college-group-header th:nth-child(4),
+#collegeTable td:nth-child(4) { width: 6%; }
+.college-group-header th:nth-child(5),
+#collegeTable td:nth-child(5) { width: 8%; }
+.college-group-header th:nth-child(6),
+#collegeTable td:nth-child(6) { width: 8%; overflow: hidden; }
+.college-group-header th:nth-child(7),
+#collegeTable td:nth-child(7) { width: 8%; }
+.college-group-header th:nth-child(8),
+#collegeTable td:nth-child(8) { width: 9%; }
+.college-group-header th:nth-child(9),
+#collegeTable td:nth-child(9) { width: 9%; }
+.college-group-header th:last-child,
+#collegeTable td:last-child { width: 4%; }
+
+.college-group-header th {
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 12.5px;
+  padding: 10px 8px;
+  position: sticky; top: 0; z-index: 2;
+}
+
+#collegeTable tbody.row-group + tbody.row-group { border-top: 8px solid transparent; }
+
+#collegeTable select,
+#collegeTable input {
+  font: inherit;
+  font-size: 12.5px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease);
+}
+#collegeTable select { width: 100%; text-align: left; }
+#collegeTable input { text-align: center; }
+#collegeTable select:focus,
+#collegeTable input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-ring);
+}
+#collegeTable input[readonly] {
+  background: var(--surface-2);
+  color: var(--text-2);
+  border-color: var(--border-soft);
+}
+
+.input-sm { width: 70px; }
+.input-grade { width: 60px; }
+.input-score { width: 80px; }
+.input-total-score { width: 70px; }
+
+/* 실기 종목 행 */
+.practical-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px 0;
+  justify-content: flex-start;
+}
+.practical-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+  padding: 8px 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-sm);
+}
+.practical-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  margin-bottom: 5px;
+  white-space: nowrap;
+}
+.practical-input-container { display: flex; gap: 5px; margin-top: 4px; }
+
+.gam-span { color: var(--danger); font-weight: 500; margin-left: 4px; font-size: 11px; }
+.total-gam-span { color: var(--danger); font-weight: 700; margin-left: 4px; font-size: 11px; vertical-align: middle; }
+
+/* 행 안 mini 버튼 */
+.score-table-btn,
+.details-btn {
+  font-size: 11px;
+  padding: 3px 8px;
+  margin-left: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 160ms var(--ease);
+}
+.score-table-btn:hover,
+.details-btn:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.del-btn {
+  padding: 5px 10px;
+  border: 1px solid var(--danger);
+  border-radius: var(--r-xs);
+  background: transparent;
+  color: var(--danger);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 160ms var(--ease);
+}
+.del-btn:hover { background: var(--danger-soft); }
+
+/* ============ 모달 상세 섹션 (간단요강) ============ */
+#modalTableContainer { display: block; }
+#modalTableContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  table-layout: fixed;
+  margin-bottom: 8px;
+}
+#modalTableContainer th,
+#modalTableContainer td {
+  border: 1px solid var(--border);
+  padding: 8px;
+  text-align: center;
+}
+#modalTableContainer th { background: var(--surface-2); font-weight: 600; color: var(--text-2); }
+
+.modal-body-custom .detail-section { margin-bottom: 20px; }
+.modal-body-custom .detail-section h4 {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid var(--border-soft);
+}
+.modal-body-custom .detail-section h4 i { color: var(--accent); margin-right: 6px; }
+
+/* 배점표 모달 안 테이블은 가로 스크롤 */
+.score-table-wrap { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+.score-table-wrap table { min-width: 280px; margin-bottom: 0; }
+
+/* ============ 로딩 오버레이 ============ */
+.loading-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: var(--scrim, rgba(9,9,11,0.45));
+  backdrop-filter: blur(4px);
+  display: grid; place-items: center;
+}
+
+/* ============ 실기 영역 힌트 (학생/종목 선택 상태) ============ */
+.practical-hint { font-size: 12px; line-height: 1.4; }
+.practical-hint.is-error { color: var(--danger); }
+.practical-hint.is-muted { color: var(--text-3); }
+.loading-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 28px 36px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  box-shadow: var(--shadow-modal);
+}
+.loading-logo { width: 120px; margin-bottom: 6px; }
+.loading-spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-left-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.loading-text { font-size: 13px; color: var(--text-2); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============ PDF 출력 모드 ============ */
+.pdf-export-mode { font-family: 'Pretendard','Noto Sans KR',sans-serif !important; width: 1200px !important; margin: 0 auto; }
+.pdf-export-mode table { width: 100% !important; table-layout: fixed !important; }
+.pdf-export-mode th,
+.pdf-export-mode td {
+  padding: 4px !important;
+  font-size: 10px !important;
+  min-width: 50px !important;
+  word-break: keep-all !important;
+  white-space: normal !important;
+}
+.pdf-export-mode td:nth-child(1),
+.pdf-export-mode th:nth-child(1) { text-align: left !important; padding-left: 2px !important; }
+.pdf-export-mode .input-sm { height: 42px !important; margin-bottom: 2px; }
+
+/* ============ 반응형 ============ */
+@media (max-width: 1200px) {
+  .page-content { padding: 16px; }
+  #collegeTable { display: block; overflow-x: auto; white-space: nowrap; }
+}
+@media (max-width: 640px) {
+  .topbar-actions .btn span { display: none; }
+  .ct-student { min-width: 160px; }
+}

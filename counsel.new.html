@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko" class="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>개인 상담 — 맥스수시엔진</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+<!-- 공용 자산 CSS: tokens → base → 레이아웃 → 컴포넌트 → 페이지 -->
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/sidebar.css">
+<link rel="stylesheet" href="assets/css/topbar.css">
+<link rel="stylesheet" href="assets/css/buttons.css">
+<link rel="stylesheet" href="assets/css/toast.css">
+<link rel="stylesheet" href="assets/css/modal.css">
+<link rel="stylesheet" href="assets/css/combobox.css">
+<link rel="stylesheet" href="counsel.new.css">
+
+<!-- PDF 라이브러리 (vendor 로컬화 — 공급망 고정) -->
+<script src="assets/vendor/jspdf.umd.min.js"></script>
+<script src="assets/vendor/html2canvas.min.js"></script>
+<script src="assets/vendor/NanumGothic-normal.js"></script>
+</head>
+
+<body data-page="counsel" data-title="개인 상담" data-category="컨설팅">
+
+<div class="app-shell" id="appShell">
+  <!-- 사이드바 (bootstrap.js 가 assets/sidebar.html 주입) -->
+  <div id="sidebar-slot"></div>
+
+  <div class="main">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="page-path">
+        <span>컨설팅</span>
+        <span class="sep">/</span>
+        <span class="current">개인 상담</span>
+      </div>
+      <div class="topbar-actions">
+        <div class="combobox ct-student" id="studentCombo"></div>
+        <button type="button" class="btn btn-ghost" id="btnAddCollege">
+          <i class="ph-light ph-plus"></i><span>대학 추가</span>
+        </button>
+        <button type="button" class="btn btn-ghost" id="btnSave">
+          <i class="ph-light ph-floppy-disk"></i><span>상담내용 저장</span>
+        </button>
+        <button type="button" class="btn btn-accent" id="btnPdf">
+          <span>PDF로 저장</span>
+          <span class="nest"><i class="ph-light ph-file-pdf"></i></span>
+        </button>
+      </div>
+    </header>
+
+    <section class="page-content">
+      <h2 id="mainTitle" class="page-title"></h2>
+
+      <div id="captureArea">
+        <form id="counselForm" autocomplete="off">
+          <div class="panel panel-scroll">
+            <table id="collegeTable">
+              <tbody id="collegeTbody"></tbody>
+            </table>
+          </div>
+
+          <div class="panel">
+            <label class="field-label" for="counselMemo">상담 메모</label>
+            <textarea id="counselMemo" class="input-memo" placeholder="상담 내용을 상세히 입력해주세요"></textarea>
+          </div>
+        </form>
+
+        <div class="save-row">
+          <button type="button" class="btn btn-accent" id="btnSaveBottom">
+            <i class="ph-light ph-floppy-disk"></i><span>상담내용 저장</span>
+          </button>
+          <span id="msg" class="save-msg"></span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- 배점표 / 간단요강 공용 모달 -->
+<div id="scoreTableModal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal-card wide">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle"></div>
+      <button type="button" class="icon-btn" id="modalCloseBtn" aria-label="닫기">
+        <i class="ph-light ph-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="modalTableContainer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 로딩 오버레이 -->
+<div id="loadingOverlay" class="loading-overlay" hidden>
+  <div class="loading-card">
+    <img src="https://github.com/seanyjeong/supermax/blob/main/maxmax.png?raw=true" alt="로딩" class="loading-logo">
+    <div class="loading-spinner"></div>
+    <div class="loading-text" id="loadingText">데이터 로딩중…</div>
+  </div>
+</div>
+
+<!-- 공용 JS -->
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/toast.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/combobox.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="counsel.new.js"></script>
+</body>
+</html>

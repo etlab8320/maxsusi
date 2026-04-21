@@ -17,7 +17,7 @@
 
   var branchCombo = null;
 
-  function esc(s) { return window.escapeHtml ? window.escapeHtml(s) : String(s == null ? '' : s); }
+  var esc = window.escapeHtml;
 
   function updateStatus(message, tone) {
     var el = document.getElementById('status');

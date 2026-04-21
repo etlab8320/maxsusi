@@ -35,6 +35,9 @@
   // drawer 상세 캐시: { [collegeID]: { details?, scoreEvents? } }
   const drawerCache = {};
 
+  // 공용 escapeHtml alias (4곳 중복 제거)
+  const esc = window.escapeHtml;
+
   // ───────── 로딩 오버레이 ─────────
   function showLoading(text) {
     const el = document.getElementById('loadingOverlay');
@@ -521,7 +524,6 @@
   function renderDrawerSilgi(group, events) {
     const container = group.querySelector('.practical-fields');
     if (!container) return;
-    const esc = window.escapeHtml;
     if (!events || events.length === 0) {
       container.innerHTML = '<span class="practical-hint is-muted">실기 종목이 없습니다.</span>';
       return;
@@ -549,7 +551,6 @@
   async function renderDrawerInfo(group, collegeID) {
     const host = group.querySelector('.drawer-info');
     if (!host) return;
-    const esc = window.escapeHtml;
 
     // 캐시
     if (drawerCache[collegeID]?.details) {
@@ -573,7 +574,6 @@
   }
 
   function buildInfoHTML(details) {
-    const esc = window.escapeHtml;
     const hasFirstStage = details['1단계배수'] && String(details['1단계배수']).trim() !== '';
     const eligibility = [];
     if (details.일반고 === 'O') eligibility.push('일반고');
@@ -717,7 +717,6 @@
   }
 
   function renderScoreBlock(name, ev) {
-    const esc = window.escapeHtml;
     const { 남 = [], 여 = [] } = ev || {};
     const allScores = new Set([...남.map(i => i.배점), ...여.map(i => i.배점)]);
     const sortedScores = Array.from(allScores).sort((a, b) => Number(b) - Number(a));

@@ -11,7 +11,7 @@
   var confirmModalId = 'confirmModal';
   var pendingAction = null; // { type: 'approve'|'delete', userid }
 
-  function escape(s) { return window.escapeHtml ? window.escapeHtml(s) : (s == null ? '' : String(s)); }
+  var escape = window.escapeHtml;
 
   async function checkAdmin() {
     var token = window.getToken();

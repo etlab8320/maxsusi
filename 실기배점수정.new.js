@@ -17,7 +17,7 @@
   var collegeCombo = null;
   var currentSilgiId = '';
 
-  function esc(s) { return window.escapeHtml ? window.escapeHtml(s) : String(s == null ? '' : s); }
+  var esc = window.escapeHtml;
 
   function setMessage(text, opts) {
     var container = document.getElementById('scoreTableContainer');

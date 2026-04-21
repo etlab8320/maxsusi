@@ -11,7 +11,7 @@
   var SAVE_PATH = '_save_practical_total_config';
   var MODES = ['비율환산', '특수식'];
 
-  function esc(s) { return window.escapeHtml ? window.escapeHtml(s) : String(s == null ? '' : s); }
+  var esc = window.escapeHtml;
 
   async function fetchColleges() {
     var wrap = document.getElementById('collegeList');

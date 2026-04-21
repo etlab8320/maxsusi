@@ -17,7 +17,7 @@
 
   // ── 헬퍼 ────────────────────────────────────────────────────
   function $(sel, root) { return (root || document).querySelector(sel); }
-  function esc(v) { return window.escapeHtml(v == null ? '' : v); }
+  var esc = window.escapeHtml;
 
   function toast(msg, type) {
     if (typeof window.showToast === 'function') window.showToast(msg, type || 'success');

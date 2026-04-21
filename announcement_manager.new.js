@@ -12,7 +12,7 @@
   var DELETE_MODAL = 'confirmDeleteModal';
   var pendingDeleteId = null;
 
-  function escape(s) { return window.escapeHtml ? window.escapeHtml(s) : (s == null ? '' : String(s)); }
+  var escape = window.escapeHtml;
 
   function formatDateTime(s) {
     if (!s) return '-';

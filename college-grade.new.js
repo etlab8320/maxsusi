@@ -21,7 +21,7 @@
   var currentPage = 1;
 
   // ── 헬퍼 ────────────────────────────────────────────────────
-  function esc(v) { return window.escapeHtml(v == null ? '' : v); }
+  var esc = window.escapeHtml;
   function toast(m, t) { if (window.showToast) window.showToast(m, t || 'success'); }
 
   function setMsg(text, isError) {

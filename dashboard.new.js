@@ -11,7 +11,7 @@
 
   var NOTICE_MODAL = 'noticeDetailModal';
 
-  function escape(s) { return window.escapeHtml ? window.escapeHtml(s) : (s == null ? '' : String(s)); }
+  var escape = window.escapeHtml;
 
   /* ---- 날짜 유틸 (원본 보존) ---- */
 

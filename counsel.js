@@ -147,7 +147,7 @@
     if (!student) {
       if (nameEl) nameEl.textContent = '학생을 선택하세요';
       if (tagEl) { tagEl.textContent = ''; tagEl.hidden = true; }
-      if (branchEl) branchEl.textContent = branchName ? `${branchName}점` : '—';
+      if (branchEl) branchEl.textContent = branchName ? `${branchName} 교육원` : '—';
       if (phoneEl) phoneEl.textContent = '—';
       return;
     }
@@ -156,7 +156,7 @@
     if (tagEl) {
       const parts = [];
       if (student.성별) parts.push(student.성별);
-      if (student.학년) parts.push(student.학년);
+      if (student.학년) parts.push(`고${student.학년}`);
       if (parts.length) {
         tagEl.textContent = parts.join(' · ');
         tagEl.hidden = false;
@@ -164,8 +164,11 @@
         tagEl.hidden = true;
       }
     }
-    if (branchEl) branchEl.textContent = branchName ? `${branchName}점` : '—';
-    if (phoneEl) phoneEl.textContent = student.연락처 || '정보 없음';
+    // 지점은 학생 본인 지점명 우선 (학생기초정보.지점명), 없으면 상담사 지점
+    const studentBranch = student.지점명 || branchName;
+    if (branchEl) branchEl.textContent = studentBranch ? `${studentBranch} 교육원` : '—';
+    // DB 컬럼 = 전화번호. 구버전 호환 위해 연락처도 fallback.
+    if (phoneEl) phoneEl.textContent = student.전화번호 || student.연락처 || '정보 없음';
   }
 
   // ───────── 위험도 4단계 분류 (클라 휴리스틱) ─────────

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="utils.js"></script>
+  <meta charset="UTF-8">
+  <title>특수 계산식 적용 대학 리스트</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans KR', sans-serif; background: #f6f8fa; max-width: 900px; margin: 0 auto; padding: 30px 10px;}
+    h2 { color: #4364f7; margin-bottom: 25px; font-weight: 700;}
+    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.05);}
+    th, td { padding: 12px 10px; border-bottom: 1px solid #e9ecef; text-align: center;}
+    th { background: #f4f7fe; color: #333; font-weight: 600;}
+    tbody tr:last-child td { border-bottom: none; }
+    .desc { color: #2c3e50; font-size: 0.98em; text-align: left;}
+    .type-badge { background: #4364f7; color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 0.85em; font-weight: 500; display: inline-block;}
+    .ckbox { width: 20px; height: 20px; }
+  </style>
+</head>
+<body>
+  <h2>🎯 특수 계산식 적용 대학 리스트</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+          <th>대학ID</th> <!-- 추가 -->
+        <th>선택</th>
+        <th>대학명</th>
+        <th>학과명</th>
+        <th>전형명</th>
+        <th>환산방식</th>
+        <th>특수식 설명</th>
+      </tr>
+    </thead>
+    <tbody id="specialBody">
+      <tr><td colspan="7">불러오는 중...</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    const SERVER = SUSI_API;;
+    const STORAGE_KEY = 'special_college_checked';
+
+    // 저장/불러오기
+    function getCheckedSet() {
+      try {
+        return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
+      } catch { return new Set(); }
+    }
+    function saveCheckedSet(set) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(set)));
+    }
+
+    async function loadSpecialColleges() {
+      const res = await susicFetch(SUSI_API + '_get_practical_colleges_with_scores');
+      const colleges = await res.json();
+      const tbody = document.getElementById('specialBody');
+      const checkedSet = getCheckedSet();
+
+      const specialColleges = colleges.filter(c =>
+        (c.환산방식 && c.환산방식 !== '비율환산') ||
+        (c.특수식설명 && c.특수식설명.trim() !== '')
+      );
+
+      if (!specialColleges.length) {
+        tbody.innerHTML = '<tr><td colspan="7">특수식 적용 대학이 없습니다.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = '';
+      specialColleges.forEach((c, idx) => {
+        // 체크박스 key는 "대학ID-학과명-전형명"으로 고유성 부여
+        const rowKey = [c.대학ID, c.학과명, c.전형명].join('|');
+        const checked = checkedSet.has(rowKey) ? 'checked' : '';
+        tbody.innerHTML += `
+          <tr>
+            <td>${idx + 1}</td>
+              <td>${c.대학ID}</td> <!-- 추가 -->
+            <td>
+              <input type="checkbox" class="ckbox" data-key="${rowKey}" ${checked}>
+            </td>
+            <td>${c.대학명}</td>
+            <td>${c.학과명 || '-'}</td>
+            <td>${c.전형명 || '-'}</td>
+            <td>${c.환산방식 || '-'}</td>
+            <td class="desc">${c.특수식설명 || '-'}</td>
+          </tr>
+        `;
+      });
+
+      // 이벤트 연결 (동적 렌더 후!)
+      document.querySelectorAll('.ckbox').forEach(cb => {
+        cb.addEventListener('change', function() {
+          const key = this.dataset.key;
+          const set = getCheckedSet();
+          if (this.checked) set.add(key);
+          else set.delete(key);
+          saveCheckedSet(set);
+        });
+      });
+    }
+
+    loadSpecialColleges();
+  </script>
+</body>
+</html>

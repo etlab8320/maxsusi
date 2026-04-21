@@ -17,41 +17,23 @@
 
   var FRAME_ID = 'contentFrame';
 
-  // .new.html 산출물로 매핑 (공용 sidebar 의 원본 경로를 신규 경로로 치환)
-  var NEW_MAP = {
-    'dashboard.html': 'dashboard.new.html',
-    'live.html': 'live.new.html',
-    'branch_summary.html': 'branch_summary.new.html',
-    'explore.html': 'explore.new.html',
-    'student.html': 'student.new.html',
-    'college-grade.html': 'college-grade.new.html',
-    'counsel.html': 'counsel.new.html',
-    'counsel_group.html': 'counsel_group.new.html',
-    'final_confirm.html': 'final_confirm.new.html',
-    '26mobile.html': '26mobile.new.html',
-    'announcement_manager.html': 'announcement_manager.new.html',
-    'admin.html': 'admin.new.html',
-    'cut_manager.html': 'cut_manager.new.html',
-  };
-
-  // 허용된 iframe 대상 목록 (defense-in-depth: 화이트리스트 엄격)
-  var ALLOWED_FRAMES = new Set(Object.values(NEW_MAP).concat([
-    // 추가 허용 (한글 파일명 .new 3종)
-    '실기기준.new.html', '실기배점수정.new.html', '지점관리.new.html', '특수식작업용.new.html',
-  ]));
+  // 허용된 iframe 대상 (사이드바 17 페이지 + 한글 4) — defense-in-depth 화이트리스트
+  var ALLOWED_FRAMES = new Set([
+    'dashboard.html', 'live.html', 'branch_summary.html', 'explore.html',
+    'student.html', 'college-grade.html', 'counsel.html', 'counsel_group.html',
+    'final_confirm.html', '26mobile.html', 'announcement_manager.html',
+    'admin.html', 'cut_manager.html',
+    '실기기준.html', '실기배점수정.html', '지점관리.html', '특수식작업용.html',
+  ]);
 
   function resolveHref(rawHref) {
     if (!rawHref) return null;
     try {
       var u = new URL(rawHref, location.href);
-      // 다른 origin 차단
-      if (u.origin !== location.origin) return null;
-      var file = u.pathname.split('/').pop() || 'dashboard.new.html';
-      // 이미 .new.html 이면 화이트리스트 확인 후 통과
-      var candidate = /\.new\.html$/.test(file) ? file : (NEW_MAP[file] || null);
-      if (!candidate) return null;                          // NEW_MAP 없는 원본은 거부
-      if (!ALLOWED_FRAMES.has(candidate)) return null;       // 화이트리스트 외 거부
-      return candidate + (u.search || '');
+      if (u.origin !== location.origin) return null;       // 외부 origin 차단
+      var file = u.pathname.split('/').pop() || 'dashboard.html';
+      if (!ALLOWED_FRAMES.has(file)) return null;          // 화이트리스트 외 거부
+      return file + (u.search || '');
     } catch (_) {
       return null;
     }

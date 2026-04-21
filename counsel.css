@@ -498,12 +498,18 @@ html.dark {
   color: var(--text);
   font-size: 13px;
 }
-/* 3단 콤보 셀은 좌우 여백 추가로 서로 붙어보이는 것 방지 */
+/* 3단 콤보 셀: 좌우 여백 + overflow:visible 허용
+ * (부모 .ct tbody td 의 overflow:hidden 이 드롭다운(280px)을 잘라 숨기던 버그 fix) */
 .ct tbody td.cell-uni,
 .ct tbody td.cell-major,
-.ct tbody td.cell-type { padding: 0 6px; }
+.ct tbody td.cell-type {
+  padding: 0 6px;
+  overflow: visible;
+}
 .ct tbody td.cell-major .combobox,
 .ct tbody td.cell-type  .combobox { margin-left: 2px; }
+/* row-main tr 도 overflow:visible 로 (기본값이지만 명시) */
+.ct tbody tr.row-main { overflow: visible; }
 .ct tbody td:first-child { padding-left: 14px; }
 .ct tbody td.num {
   text-align: right;

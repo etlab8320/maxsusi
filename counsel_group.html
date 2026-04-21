@@ -123,8 +123,11 @@
     </div>
     <div class="modal-body">
       <div class="combobox" id="comboAddStudent"></div>
+      <div class="pending-hint" id="pendingHint">선택한 학생이 아래 목록에 쌓입니다. 마지막에 <b>추가</b>를 누르면 한 번에 반영됩니다.</div>
+      <div class="pending-students" id="pendingStudents" aria-live="polite"></div>
     </div>
     <div class="modal-foot">
+      <span class="foot-left" id="pendingCount" aria-live="polite"></span>
       <button type="button" class="btn btn-ghost" data-action="modal-close">취소</button>
       <button type="button" class="btn btn-accent" id="btnConfirmAddStudent">추가</button>
     </div>

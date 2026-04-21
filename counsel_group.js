@@ -63,6 +63,7 @@
     });
     addStudentCombo = window.createCombobox(document.getElementById('comboAddStudent'), {
       placeholder: '학생 선택', searchable: true, options: [],
+      onChange: onPickStudentToAdd,
     });
 
     document.getElementById('btnSearch').addEventListener('click', searchConsultations);
@@ -329,37 +330,93 @@
     }
   }
 
-  // ───────── 학생 추가 모달 ─────────
+  // ───────── 학생 추가 모달 (일괄 선택 → 일괄 추가) ─────────
+  let pendingAddStudents = [];  // 모달 내 선택 대기 목록
+
   function openStudentAddModal() {
     if (!currentCollege) {
       if (window.showToast) window.showToast('먼저 조회할 대학을 선택해주세요.', 'info');
       return;
     }
-    const displayedIds = Object.keys(currentStudentMap).map(id => parseInt(id, 10));
-    const available = allBranchStudents.filter(s => !displayedIds.includes(s.학생ID));
+    const available = getAvailableStudents();
     if (available.length === 0) {
       if (window.showToast) window.showToast('추가할 수 있는 학생이 없습니다.', 'info');
       return;
     }
-    const opts = available.map(s => ({
+    pendingAddStudents = [];
+    refreshAddStudentCombo();
+    renderPendingStudents();
+    window.openModal('addStudentModal');
+  }
+
+  // 현재 상담에 이미 있는 + pending 에 있는 학생 제외
+  function getAvailableStudents() {
+    const displayedIds = Object.keys(currentStudentMap).map(id => parseInt(id, 10));
+    const pendingIds = pendingAddStudents.map(s => s.학생ID);
+    return allBranchStudents.filter(s =>
+      !displayedIds.includes(s.학생ID) && !pendingIds.includes(s.학생ID)
+    );
+  }
+
+  function refreshAddStudentCombo() {
+    const opts = getAvailableStudents().map(s => ({
       value: String(s.학생ID),
       label: `${s.이름} (${s.학년 || '학년정보없음'})`,
     }));
     addStudentCombo.setOptions(opts);
     addStudentCombo.setValue('');
-    window.openModal('addStudentModal');
+  }
+
+  function onPickStudentToAdd(v) {
+    if (!v) return;
+    const stu = allBranchStudents.find(s => String(s.학생ID) === String(v));
+    if (!stu) return;
+    if (pendingAddStudents.some(p => p.학생ID === stu.학생ID)) return;
+    pendingAddStudents.push(stu);
+    refreshAddStudentCombo();    // pending 제외된 옵션으로 재세팅
+    renderPendingStudents();
+  }
+
+  function removePendingStudent(studentId) {
+    pendingAddStudents = pendingAddStudents.filter(s => String(s.학생ID) !== String(studentId));
+    refreshAddStudentCombo();
+    renderPendingStudents();
+  }
+
+  function renderPendingStudents() {
+    const host = document.getElementById('pendingStudents');
+    const countEl = document.getElementById('pendingCount');
+    if (!host) return;
+    if (pendingAddStudents.length === 0) {
+      host.innerHTML = '';
+      if (countEl) countEl.textContent = '';
+      return;
+    }
+    host.innerHTML = pendingAddStudents.map(s => `
+      <span class="pending-chip" data-id="${s.학생ID}">
+        <span class="chip-name">${esc(s.이름)}</span>
+        <span class="chip-meta">${esc(String(s.학년 || ''))}${s.성별 ? ' · ' + esc(s.성별) : ''}</span>
+        <button type="button" class="chip-remove" data-remove="${s.학생ID}" aria-label="${esc(s.이름)} 제거">
+          <i class="ph-light ph-x"></i>
+        </button>
+      </span>
+    `).join('');
+    host.querySelectorAll('[data-remove]').forEach(btn => {
+      btn.addEventListener('click', () => removePendingStudent(btn.dataset.remove));
+    });
+    if (countEl) countEl.textContent = `선택된 ${pendingAddStudents.length}명`;
   }
 
   function confirmAddStudent() {
-    const v = addStudentCombo.value;
-    if (!v) {
-      if (window.showToast) window.showToast('학생을 선택하세요.', 'info');
+    if (pendingAddStudents.length === 0) {
+      if (window.showToast) window.showToast('추가할 학생을 선택하세요.', 'info');
       return;
     }
-    const stu = allBranchStudents.find(s => String(s.학생ID) === String(v));
-    if (!stu) return;
-    addStudentRow(stu, practicalEvents);
+    pendingAddStudents.forEach(stu => addStudentRow(stu, practicalEvents));
+    const n = pendingAddStudents.length;
+    pendingAddStudents = [];
     window.closeModal('addStudentModal');
+    if (window.showToast) window.showToast(`${n}명 추가되었습니다`, 'success');
   }
 
   // ───────── 그룹 일괄 저장 (원본 payload 보존) ─────────

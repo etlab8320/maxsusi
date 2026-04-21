@@ -11,6 +11,12 @@
   transition: grid-template-columns 420ms var(--ease);
 }
 .app-shell.collapsed { --sidebar-w: 68px; }
+/* iframe 자식 페이지: 부모 쉘이 사이드바 보유 → 자식은 단일 컬럼 */
+.app-shell.iframe-child {
+  --sidebar-w: 0px;
+  grid-template-columns: 1fr;  /* 단일 컬럼으로 .main 이 전폭 차지 */
+}
+.app-shell.iframe-child #sidebar-slot { display: none; }
 
 /* ============ SIDEBAR ============ */
 .sidebar {

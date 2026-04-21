@@ -21,6 +21,13 @@ try {
   async function loadSidebar() {
     var host = document.getElementById('sidebar-slot');
     if (!host) return;
+    // iframe 안에서는 부모 쉘(index.new)이 사이드바를 보유 → 중복 방지
+    if (window.top !== window.self) {
+      host.hidden = true;
+      var shell = document.getElementById('appShell') || document.querySelector('.app-shell');
+      if (shell) shell.classList.add('iframe-child');
+      return;
+    }
     try {
       var res = await fetch('/assets/sidebar.html', { cache: 'no-cache' });
       if (!res.ok) {
@@ -144,6 +151,8 @@ try {
   }
 
   function ensureWatermark() {
+    // iframe 자식은 부모 쉘의 워터마크를 투과로 공유 → 자식은 스킵 (중복 방지)
+    if (window.top !== window.self) return;
     if (document.querySelector('.watermark-bg')) return;
     document.documentElement.style.setProperty('--watermark-url', "url('/assets/img/max-logo.png')");
     var wm = document.createElement('div');

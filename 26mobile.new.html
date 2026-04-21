@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ko" class="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>모바일 실기 수합 — 맥스수시엔진</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+<!-- 공용 자산 CSS (모바일에서도 동일 8종 + 페이지 전용) -->
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/sidebar.css">
+<link rel="stylesheet" href="assets/css/topbar.css">
+<link rel="stylesheet" href="assets/css/buttons.css">
+<link rel="stylesheet" href="assets/css/toast.css">
+<link rel="stylesheet" href="assets/css/modal.css">
+<link rel="stylesheet" href="assets/css/combobox.css">
+<link rel="stylesheet" href="26mobile.new.css">
+</head>
+
+<body data-page="26mobile" data-title="모바일 실기 수합" data-category="수합">
+
+<!-- 모바일 전용 쉘 (사이드바 숨김 · 상단 미니 탑바) -->
+<div class="mobile-shell">
+  <header class="m-topbar">
+    <button type="button" class="m-back" id="mBack" aria-label="뒤로가기">
+      <i class="ph-light ph-arrow-left"></i>
+    </button>
+    <h1 class="m-title" id="mTitle">모바일 실기 수합</h1>
+  </header>
+
+  <main class="m-main">
+    <!-- 대학 선택 카드 -->
+    <section class="m-card">
+      <h2 class="m-card-title"><i class="ph-light ph-graduation-cap"></i>대학 정보 선택</h2>
+
+      <div class="m-field">
+        <label for="mCollegeCombo">대학명</label>
+        <div class="combobox" id="mCollegeCombo"></div>
+      </div>
+      <div class="m-field">
+        <label for="mMajorCombo">학과명</label>
+        <div class="combobox" id="mMajorCombo"></div>
+      </div>
+      <div class="m-field" style="margin-bottom:0;">
+        <label for="mTypeCombo">전형명</label>
+        <div class="combobox" id="mTypeCombo"></div>
+      </div>
+    </section>
+
+    <!-- 학생 목록 카드 -->
+    <section class="m-card" id="mStudentCard" hidden>
+      <h2 class="m-card-title"><i class="ph-light ph-users"></i>학생 목록 <span class="m-count" id="mCount"></span></h2>
+      <div id="mStudentList"></div>
+    </section>
+  </main>
+</div>
+
+<!-- 기록 입력 모달 -->
+<div class="modal-backdrop" id="recordModal" role="dialog" aria-modal="true" aria-labelledby="recordTitle">
+  <div class="modal-card" style="max-width: 520px;">
+    <div class="modal-head">
+      <div class="modal-title" id="recordTitle">기록 입력</div>
+      <button type="button" class="modal-close" id="recordCloseX" aria-label="닫기">
+        <i class="ph-light ph-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="recordForm"></div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" id="recordCancel">취소</button>
+      <button type="button" class="btn btn-primary" id="recordSave">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- 결과 모달 -->
+<div class="modal-backdrop" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="resultModalTitle">
+  <div class="modal-card" style="max-width: 560px;">
+    <div class="modal-head">
+      <div class="modal-title" id="resultModalTitle">저장 완료</div>
+      <button type="button" class="modal-close" id="resultCloseX" aria-label="닫기">
+        <i class="ph-light ph-x"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="resultBody"></div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-primary" id="resultOk">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- 로딩 오버레이 -->
+<div id="loadingOverlay" class="loading-overlay" hidden>
+  <div class="loading-card">
+    <div class="loading-spinner"></div>
+    <div class="loading-text" id="loadingText">로딩중…</div>
+  </div>
+</div>
+
+<!-- 공용 JS -->
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/toast.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/combobox.js"></script>
+<!-- bootstrap.js 는 사이드바 주입을 시도하지만 sidebar-slot 이 없으면 no-op.
+     watermark/themeToggle/toast container 만 주입된다. 26mobile 에선 topbar-actions 가 없어
+     themeToggle 이 안붙어도 안전. -->
+<script src="assets/js/bootstrap.js"></script>
+<script src="26mobile.new.js"></script>
+</body>
+</html>

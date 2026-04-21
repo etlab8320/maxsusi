@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ko" class="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>그룹 상담 — 맥스수시엔진</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/sidebar.css">
+<link rel="stylesheet" href="assets/css/topbar.css">
+<link rel="stylesheet" href="assets/css/buttons.css">
+<link rel="stylesheet" href="assets/css/toast.css">
+<link rel="stylesheet" href="assets/css/modal.css">
+<link rel="stylesheet" href="assets/css/combobox.css">
+<link rel="stylesheet" href="counsel_group.new.css">
+</head>
+
+<body data-page="counsel_group" data-title="그룹 상담" data-category="컨설팅">
+
+<div class="app-shell" id="appShell">
+  <div id="sidebar-slot"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="page-path">
+        <span>컨설팅</span>
+        <span class="sep">/</span>
+        <span class="current">그룹 상담</span>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-ghost" id="btnAddStudent">
+          <i class="ph-light ph-user-plus"></i><span>학생 추가</span>
+        </button>
+        <button type="button" class="btn btn-accent" id="btnSaveAll">
+          <i class="ph-light ph-floppy-disk"></i><span>전체 저장</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title" id="pageTitle">
+            그룹 상담
+            <span class="year-chip" id="yearChip">26학년도</span>
+          </h1>
+          <div class="page-sub" id="pageSub">대학/학과/전형 선택 후 상담 후보를 일괄 편집 · 저장</div>
+        </div>
+      </div>
+
+      <!-- 필터 바 -->
+      <div class="filter-bar">
+        <div class="filter-field">
+          <label for="comboCollege">대학명</label>
+          <div class="combobox" id="comboCollege"></div>
+        </div>
+        <div class="filter-field">
+          <label for="comboMajor">학과명</label>
+          <div class="combobox" id="comboMajor"></div>
+        </div>
+        <div class="filter-field">
+          <label for="comboType">전형명</label>
+          <div class="combobox" id="comboType"></div>
+        </div>
+        <button type="button" class="btn btn-accent" id="btnSearch">
+          <i class="ph-light ph-magnifying-glass"></i><span>조회</span>
+        </button>
+        <button type="button" class="btn btn-ghost" id="btnScoreTable" disabled>
+          <i class="ph-light ph-table"></i><span>배점표</span>
+        </button>
+      </div>
+
+      <!-- 결과 -->
+      <div class="result-panel">
+        <div class="result-head">
+          <h3 id="resultTitle">조회할 대학/학과/전형을 선택해주세요.</h3>
+          <div id="cutScoresDisplay" class="cut-scores"></div>
+        </div>
+        <div class="table-wrap scroll-thin">
+          <table id="resultTable" class="group-table">
+            <thead></thead>
+            <tbody id="resultTbody">
+              <tr><td class="empty-cell" colspan="8">조회할 대학/학과/전형을 선택해주세요.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- 배점표 모달 -->
+<div class="modal-backdrop" id="scoreTableModal" role="dialog" aria-modal="true" aria-labelledby="scoreTableTitle">
+  <div class="modal-card wide">
+    <div class="modal-head">
+      <h3 class="modal-title" id="scoreTableTitle">배점표</h3>
+      <button type="button" class="modal-close" data-action="modal-close" aria-label="닫기">
+        <i class="ph-light ph-x"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="scoreTableContainer"></div>
+  </div>
+</div>
+
+<!-- 학생 추가 모달 -->
+<div class="modal-backdrop" id="addStudentModal" role="dialog" aria-modal="true" aria-labelledby="addStudentTitle">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 class="modal-title" id="addStudentTitle">상담에 추가할 학생 선택</h3>
+      <button type="button" class="modal-close" data-action="modal-close" aria-label="닫기">
+        <i class="ph-light ph-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="combobox" id="comboAddStudent"></div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" data-action="modal-close">취소</button>
+      <button type="button" class="btn btn-accent" id="btnConfirmAddStudent">추가</button>
+    </div>
+  </div>
+</div>
+
+<!-- 로딩 오버레이 -->
+<div id="loadingOverlay" class="loading-overlay" hidden>
+  <div class="loading-card">
+    <div class="loading-spinner"></div>
+    <div class="loading-text" id="loadingText">로딩중…</div>
+  </div>
+</div>
+
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/toast.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/combobox.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="counsel_group.new.js"></script>
+</body>
+</html>

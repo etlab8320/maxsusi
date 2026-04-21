@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko" class="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>지점별 최종 수합 현황 — 맥스수시엔진</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+<!-- 공용 자산 CSS -->
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/sidebar.css">
+<link rel="stylesheet" href="assets/css/topbar.css">
+<link rel="stylesheet" href="assets/css/buttons.css">
+<link rel="stylesheet" href="assets/css/toast.css">
+<link rel="stylesheet" href="assets/css/modal.css">
+<link rel="stylesheet" href="assets/css/combobox.css">
+<link rel="stylesheet" href="branch_summary.new.css">
+</head>
+
+<body data-page="branch_summary" data-title="지점별 최종수합" data-category="수합">
+
+<div class="app-shell" id="appShell">
+  <div id="sidebar-slot"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="page-path">
+        <span>수합</span>
+        <span class="sep">/</span>
+        <span class="current">지점별 최종수합</span>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-ghost" id="btnCheckUnassigned">
+          <i class="ph-light ph-user-minus"></i><span>미수합 학생 확인</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title" id="mainTitle">지점 최종수합(실기포함)</h1>
+          <div class="page-sub">대학별 학생 성적 · 실기기록 · 합격 결과 편집 및 저장</div>
+        </div>
+        <div class="head-meta" id="headMeta"></div>
+      </div>
+
+      <div id="universityAccordion" class="university-accordion">
+        <div class="placeholder">로딩중...</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- 배점표 모달 -->
+<div class="modal-backdrop" id="scoreTableModal">
+  <div class="modal-card" style="max-width: 1200px;">
+    <div class="modal-head">
+      <div class="modal-title" id="scoreTableModalTitle">배점표</div>
+      <button type="button" class="modal-close" data-action="close-score-modal" aria-label="닫기">
+        <i class="ph-light ph-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="scoreTableContainer" class="score-table-container">로딩중...</div>
+    </div>
+  </div>
+</div>
+
+<!-- 미수합 학생 모달 -->
+<div class="modal-backdrop" id="unassignedModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-title">미수합 학생 명단</div>
+      <button type="button" class="modal-close" data-action="close-unassigned" aria-label="닫기">
+        <i class="ph-light ph-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="unassignedBody" class="unassigned-body">로딩중...</div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-primary" data-action="close-unassigned">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- 공용 JS -->
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/toast.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/combobox.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="branch_summary.new.js"></script>
+</body>
+</html>

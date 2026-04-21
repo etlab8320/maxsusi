@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko" class="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>대학 검색 — 맥스수시엔진</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+<!-- 공용 자산 CSS -->
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/sidebar.css">
+<link rel="stylesheet" href="assets/css/topbar.css">
+<link rel="stylesheet" href="assets/css/buttons.css">
+<link rel="stylesheet" href="assets/css/toast.css">
+<link rel="stylesheet" href="assets/css/modal.css">
+<link rel="stylesheet" href="assets/css/combobox.css">
+<link rel="stylesheet" href="explore.new.css">
+</head>
+
+<body data-page="explore" data-title="대학 검색" data-category="탐색">
+
+<div class="app-shell" id="appShell">
+  <div id="sidebar-slot"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="page-path">
+        <span>탐색</span>
+        <span class="sep">/</span>
+        <span class="current">대학 검색</span>
+      </div>
+      <div class="topbar-actions"></div>
+    </header>
+
+    <section class="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">대학 검색</h1>
+          <div class="page-sub">전형 유형 · 지역 · 자격 · 실기 제외 종목 필터 + 일괄 상담 추가</div>
+        </div>
+        <div class="head-meta" id="resultMeta">0개 검색됨</div>
+      </div>
+
+      <section class="card filter-card">
+        <div id="filtersContainer">
+          <div class="filter-section">
+            <div class="horizontal-filters">
+              <div class="filter-group" data-filter-group="isPractical">
+                <div class="filter-title">전형 유형</div>
+                <div class="filter-buttons">
+                  <button type="button" class="filter-btn active" data-value="">전체</button>
+                  <button type="button" class="filter-btn" data-value="O">실기</button>
+                </div>
+              </div>
+              <div class="filter-group" data-filter-group="firstStage">
+                <div class="filter-title">1단계 전형</div>
+                <div class="filter-buttons">
+                  <button type="button" class="filter-btn active" data-value="">전체</button>
+                  <button type="button" class="filter-btn" data-value="O">있음</button>
+                  <button type="button" class="filter-btn" data-value="X">없음</button>
+                </div>
+              </div>
+              <div class="filter-group" data-filter-group="minSat">
+                <div class="filter-title">수능 최저</div>
+                <div class="filter-buttons">
+                  <button type="button" class="filter-btn active" data-value="">전체</button>
+                  <button type="button" class="filter-btn" data-value="O">있음</button>
+                  <button type="button" class="filter-btn" data-value="X">없음</button>
+                </div>
+              </div>
+              <div class="filter-group" data-filter-group="teaching">
+                <div class="filter-title">교직 이수</div>
+                <div class="filter-buttons">
+                  <button type="button" class="filter-btn active" data-value="">전체</button>
+                  <button type="button" class="filter-btn" data-value="O">가능(O)</button>
+                  <button type="button" class="filter-btn" data-value="&#9651;">일부가능(&#9651;)</button>
+                  <button type="button" class="filter-btn" data-value="X">불가능(X)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-section" data-filter-group="region">
+            <div class="filter-title">지역 (다중 선택 · '전체' 선택 시 초기화)</div>
+            <div class="filter-buttons" id="region-filters"></div>
+          </div>
+
+          <div class="filter-section" data-filter-group="eligibility">
+            <div class="filter-title">지원 자격 (중복 선택 가능)</div>
+            <div class="filter-buttons">
+              <button type="button" class="filter-btn" data-key="일반고" data-value="O">일반고</button>
+              <button type="button" class="filter-btn" data-key="특성화고" data-value="O">특성화고</button>
+              <button type="button" class="filter-btn" data-key="체육고" data-value="O">체육고</button>
+              <button type="button" class="filter-btn" data-key="검정고시" data-value="O">검정고시</button>
+            </div>
+          </div>
+
+          <div class="filter-section" data-filter-group="excludeEvents">
+            <div class="filter-title">제외할 실기 종목 (중복 선택 가능)</div>
+            <div id="event-categories">
+              <div class="filter-subtitle" data-cat="running">달리기</div>
+              <div class="filter-buttons collapsed" id="events-running"></div>
+              <div class="filter-subtitle" data-cat="jump">점프</div>
+              <div class="filter-buttons collapsed" id="events-jump"></div>
+              <div class="filter-subtitle" data-cat="ball">구기</div>
+              <div class="filter-buttons collapsed" id="events-ball"></div>
+              <div class="filter-subtitle" data-cat="flex">유연성</div>
+              <div class="filter-buttons collapsed" id="events-flex"></div>
+              <div class="filter-subtitle" data-cat="other">기타</div>
+              <div class="filter-buttons collapsed" id="events-other"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:8%;">지역</th>
+              <th style="width:15%;">대학명</th>
+              <th style="width:18%;">학과명</th>
+              <th style="width:15%;">전형명</th>
+              <th style="width:8%;">1단계</th>
+              <th>실기종목</th>
+              <th style="width:10%;">관리</th>
+            </tr>
+          </thead>
+          <tbody id="resultTbody">
+            <tr><td colspan="7" class="placeholder">로딩중...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- 학생 선택 모달 -->
+<div class="modal-backdrop" id="studentSelectModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-title">상담에 추가할 학생 선택</div>
+      <button type="button" class="modal-close" data-action="close-select" aria-label="닫기">
+        <i class="ph-light ph-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="select-hint">Ctrl / Shift / Cmd 로 여러 명 선택 가능</div>
+      <select id="studentSelect" class="student-select" multiple></select>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" data-action="close-select">취소</button>
+      <button type="button" class="btn btn-primary" id="btnConfirmAdd">추가</button>
+    </div>
+  </div>
+</div>
+
+<!-- 공용 JS -->
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/toast.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/combobox.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="explore.new.js"></script>
+</body>
+</html>

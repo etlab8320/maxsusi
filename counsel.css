@@ -488,7 +488,7 @@ html.dark {
 .score-table-wrap tbody td:first-child { font-weight: 700; color: var(--accent); }
 
 .ct tbody td {
-  padding: 0 10px;
+  padding: 0 8px;
   border-bottom: 1px solid var(--border-soft);
   height: 42px;
   vertical-align: middle;
@@ -498,6 +498,12 @@ html.dark {
   color: var(--text);
   font-size: 13px;
 }
+/* 3단 콤보 셀은 좌우 여백 추가로 서로 붙어보이는 것 방지 */
+.ct tbody td.cell-uni,
+.ct tbody td.cell-major,
+.ct tbody td.cell-type { padding: 0 6px; }
+.ct tbody td.cell-major .combobox,
+.ct tbody td.cell-type  .combobox { margin-left: 2px; }
 .ct tbody td:first-child { padding-left: 14px; }
 .ct tbody td.num {
   text-align: right;

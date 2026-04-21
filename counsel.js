@@ -73,6 +73,9 @@
         branchName = '';
       }
 
+      const yearChip = document.getElementById('yearChip');
+      if (yearChip) yearChip.textContent = `${window.SUSI_YEAR}학년도 상담`;
+
       students = (studentJson && studentJson.students) || [];
       studentMap = {};
       students.forEach(s => { studentMap[s.학생ID] = s; });
@@ -261,15 +264,15 @@
     main.classList.add('row-main');
     main.innerHTML =
       `<td class="num"><span class="row-counter">${idx}</span></td>` +
-      `<td>` +
+      `<td class="cell-uni">` +
         `<div class="uni-cell">` +
           `<span class="risk-bar unknown" title="—"></span>` +
           `<div class="sel-college"></div>` +
           `<span class="row-chev"><i class="ph-light ph-caret-right"></i></span>` +
         `</div>` +
       `</td>` +
-      `<td><div class="sel-major"></div></td>` +
-      `<td><div class="sel-type"></div></td>` +
+      `<td class="cell-major"><div class="sel-major"></div></td>` +
+      `<td class="cell-type"><div class="sel-type"></div></td>` +
       `<td class="c"><input type="text" class="input-grade" placeholder="—"></td>` +
       `<td class="c"><input type="text" class="input-score" placeholder="—"></td>` +
       `<td class="c"><span class="ro-val input-total-score">—</span></td>` +
@@ -1086,7 +1089,7 @@
       doc.text(`맥스체대입시 ${branch} 교육원`, A4_WIDTH / 2, 50, { align: 'center' });
 
       doc.setFontSize(20);
-      doc.text('2026학년도 수시 상담자료', A4_WIDTH / 2, 65, { align: 'center' });
+      doc.text(`20${window.SUSI_YEAR}학년도 수시 상담자료`, A4_WIDTH / 2, 65, { align: 'center' });
 
       const logoWidth = A4_WIDTH;
       const logoHeight = logoWidth / logoAspectRatio;

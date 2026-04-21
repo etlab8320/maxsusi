@@ -137,29 +137,21 @@
     return studentCombo ? studentCombo.value : '';
   }
 
-  // ───────── 프로필 카드 렌더 ─────────
+  // ───────── 프로필 카드 렌더 (간소화: 아바타 · 상담횟수 · 저장시각 제거) ─────────
   function renderProfileCard(user, student) {
-    const avatarEl = document.getElementById('pAvatar');
     const nameEl = document.getElementById('pName');
     const tagEl = document.getElementById('pTag');
     const branchEl = document.getElementById('pBranch');
     const phoneEl = document.getElementById('pPhone');
-    const sessionsEl = document.getElementById('pSessions');
-    const lastSavedEl = document.getElementById('pLastSaved');
 
     if (!student) {
-      if (avatarEl) avatarEl.textContent = '–';
       if (nameEl) nameEl.textContent = '학생을 선택하세요';
       if (tagEl) { tagEl.textContent = ''; tagEl.hidden = true; }
       if (branchEl) branchEl.textContent = branchName ? `${branchName}점` : '—';
       if (phoneEl) phoneEl.textContent = '—';
-      if (sessionsEl) sessionsEl.textContent = '— (Phase 4 예정)';
-      if (lastSavedEl) lastSavedEl.textContent = '— (Phase 4 예정)';
       return;
     }
 
-    const initial = (student.이름 || '').trim().charAt(0) || '–';
-    if (avatarEl) avatarEl.textContent = initial;
     if (nameEl) nameEl.textContent = student.이름 || '-';
     if (tagEl) {
       const parts = [];
@@ -174,9 +166,6 @@
     }
     if (branchEl) branchEl.textContent = branchName ? `${branchName}점` : '—';
     if (phoneEl) phoneEl.textContent = student.연락처 || '정보 없음';
-    // Phase 4 대기
-    if (sessionsEl) sessionsEl.textContent = '— (Phase 4 예정)';
-    if (lastSavedEl) lastSavedEl.textContent = '— (Phase 4 예정)';
   }
 
   // ───────── 위험도 4단계 분류 (클라 휴리스틱) ─────────

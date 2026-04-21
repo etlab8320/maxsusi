@@ -73,8 +73,8 @@
           </div>
         </div>
 
-        <!-- profile + summary strip -->
-        <div class="profile-strip">
+        <!-- 학생 프로필 카드 (요약 KPI 제거 — 필요 시 후속 라운드에서 재도입) -->
+        <div class="profile-strip profile-strip--solo">
           <div class="profile-card">
             <div class="profile-avatar" id="pAvatar">–</div>
             <div class="profile-body">
@@ -87,34 +87,6 @@
                 <div><i class="ph-light ph-phone"></i><span id="pPhone">—</span></div>
                 <div><i class="ph-light ph-chat-circle-dots"></i><span id="pSessions" title="Phase 4 예정">— (Phase 4 예정)</span></div>
                 <div><i class="ph-light ph-clock-counter-clockwise"></i><span id="pLastSaved" title="Phase 4 예정">— (Phase 4 예정)</span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="summary-card">
-            <div class="kpi">
-              <div class="kpi-label">지원 대학</div>
-              <div class="kpi-value"><span id="kpiCount">0</span><span class="unit">개</span></div>
-              <div class="kpi-sub"><span>평균 합산 <b id="kpiAvg">—</b></span></div>
-            </div>
-            <div class="kpi">
-              <div class="kpi-label">맥스컷 통과</div>
-              <div class="kpi-value"><span id="kpiMax">0</span><span class="unit">곳</span></div>
-              <div class="kpi-sub"><span id="kpiMaxSub">—</span></div>
-            </div>
-            <div class="kpi">
-              <div class="kpi-label">지점컷 통과</div>
-              <div class="kpi-value"><span id="kpiBranch">0</span><span class="unit">곳</span></div>
-              <div class="kpi-sub"><span id="kpiBranchSub">—</span></div>
-            </div>
-            <div class="kpi kpi-wide">
-              <div class="kpi-label">위험도 분포</div>
-              <div class="risk-dist" id="riskDist"></div>
-              <div class="risk-legend">
-                <span><span class="dot seg-stable"></span>안정</span>
-                <span><span class="dot seg-fit"></span>적정</span>
-                <span><span class="dot seg-reach"></span>소신</span>
-                <span><span class="dot seg-risky"></span>위험</span>
               </div>
             </div>
           </div>
@@ -160,10 +132,9 @@
                       <th>전형</th>
                       <th class="c">등급</th>
                       <th class="c">내신</th>
-                      <th class="c">실기</th>
-                      <th class="num-th">합산</th>
-                      <th class="num-th">맥스컷 Δ</th>
-                      <th class="num-th">지점컷 Δ</th>
+                      <th class="c">실기</th>                      <th class="num-th">합산 · Δ</th>
+                      <th class="num-th">맥스컷</th>
+                      <th class="num-th">지점컷</th>
                       <th class="c"></th>
                     </tr>
                   </thead>

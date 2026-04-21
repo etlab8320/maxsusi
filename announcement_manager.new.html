@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko" class="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>공지사항 관리 — 맥스수시엔진</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+<!-- 공용 자산 CSS -->
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/sidebar.css">
+<link rel="stylesheet" href="assets/css/topbar.css">
+<link rel="stylesheet" href="assets/css/buttons.css">
+<link rel="stylesheet" href="assets/css/toast.css">
+<link rel="stylesheet" href="assets/css/modal.css">
+<link rel="stylesheet" href="assets/css/combobox.css">
+<link rel="stylesheet" href="announcement_manager.new.css">
+</head>
+
+<body data-page="announcement_manager" data-title="공지사항 관리" data-category="관리자">
+
+<div class="app-shell" id="appShell">
+  <div id="sidebar-slot"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="page-path">
+        <span>관리자</span>
+        <span class="sep">/</span>
+        <span class="current">공지사항 관리</span>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-accent" id="btnOpenWrite">
+          <i class="ph-light ph-plus"></i><span>새 공지 작성</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="page-content">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">공지사항 관리</h1>
+          <div class="page-sub">원장 대시보드에 노출되는 공지 작성 · 삭제</div>
+        </div>
+        <div class="head-meta" id="headMeta"></div>
+      </div>
+
+      <div class="card">
+        <table class="data-table" id="notice-table">
+          <thead>
+            <tr>
+              <th style="width: 22%;">제목</th>
+              <th>내용</th>
+              <th style="width: 18%;">작성일</th>
+              <th style="width: 10%;">중요</th>
+              <th style="width: 10%;">관리</th>
+            </tr>
+          </thead>
+          <tbody id="notice-tbody">
+            <tr><td colspan="5" class="placeholder">로딩중...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- 공지 작성 모달 -->
+<div class="modal-backdrop" id="announcementModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-title">새 공지사항 작성</div>
+    </div>
+    <div class="modal-body">
+      <form id="notice-form" autocomplete="off">
+        <label class="field-label" for="notice-title">제목</label>
+        <input type="text" id="notice-title" class="text-input" placeholder="제목" required>
+
+        <label class="field-label" for="notice-content">내용</label>
+        <textarea id="notice-content" class="text-input" placeholder="내용" required></textarea>
+
+        <label class="check-row">
+          <input type="checkbox" id="notice-important">
+          <span>중요 공지로 등록</span>
+        </label>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" id="btnCancelWrite">취소</button>
+      <button type="button" class="btn btn-accent" id="btnSubmitWrite">등록하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 삭제 확인 모달 -->
+<div class="modal-backdrop" id="confirmDeleteModal">
+  <div class="modal-card" style="max-width: 420px;">
+    <div class="modal-head">
+      <div class="modal-title">공지사항 삭제</div>
+    </div>
+    <div class="modal-body">
+      <p style="margin:0; color:var(--text-2); font-size:13.5px; line-height:1.55;">
+        정말 삭제하시겠습니까? 삭제된 공지사항은 복구할 수 없습니다.
+      </p>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" id="btnCancelDelete">취소</button>
+      <button type="button" class="btn btn-primary" id="btnConfirmDelete">삭제</button>
+    </div>
+  </div>
+</div>
+
+<!-- 공용 JS -->
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/toast.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/combobox.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="announcement_manager.new.js"></script>
+</body>
+</html>

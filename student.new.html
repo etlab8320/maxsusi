@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko" class="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>학생 명단 관리 — 맥스수시엔진</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+<!-- 공용 자산 CSS -->
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/sidebar.css">
+<link rel="stylesheet" href="assets/css/topbar.css">
+<link rel="stylesheet" href="assets/css/buttons.css">
+<link rel="stylesheet" href="assets/css/toast.css">
+<link rel="stylesheet" href="assets/css/modal.css">
+<link rel="stylesheet" href="assets/css/combobox.css">
+<link rel="stylesheet" href="student.new.css">
+</head>
+
+<body data-page="student" data-title="학생 명단 관리" data-category="학생·성적">
+
+<div class="app-shell" id="appShell">
+  <div id="sidebar-slot"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="page-path">
+        <span>학생·성적</span>
+        <span class="sep">/</span>
+        <span class="current">학생 명단 관리</span>
+      </div>
+      <div class="topbar-actions">
+        <span class="chip ghost" id="branchChip" hidden><i class="ph-light ph-storefront"></i><span id="branchChipText">—</span></span>
+      </div>
+    </header>
+
+    <section class="page-content">
+      <!-- 학생 신규 등록 -->
+      <div class="card">
+        <div class="card-head">
+          <h3 class="card-title">학생 신규 등록</h3>
+          <span class="card-hint">엑셀에서 '이름, 학교, 학년, 성별, 전화번호' 순으로 복사 후, 이름 칸에 붙여넣으세요.</span>
+        </div>
+        <form id="regForm" autocomplete="off">
+          <div class="table-wrap">
+            <table class="st-table">
+              <thead>
+                <tr>
+                  <th style="width:5%;">No</th>
+                  <th style="width:15%;">이름</th>
+                  <th style="width:25%;">학교</th>
+                  <th style="width:10%;">학년</th>
+                  <th style="width:10%;">성별</th>
+                  <th style="width:25%;">전화번호</th>
+                  <th style="width:10%;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="regTbody"></tbody>
+            </table>
+          </div>
+          <div class="card-foot">
+            <span id="regMsg" class="foot-msg"></span>
+            <button type="button" class="btn btn-ghost" id="btnAddRow"><i class="ph-light ph-plus"></i><span>행 추가</span></button>
+            <button type="submit" class="btn btn-accent"><span>명단 등록</span><span class="nest"><i class="ph-light ph-arrow-right"></i></span></button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 기존 학생 관리 -->
+      <div class="card">
+        <div class="card-head">
+          <h3 class="card-title">기존 학생 관리</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-wrap">
+            <table class="st-table" id="studentTable">
+              <thead>
+                <tr>
+                  <th style="width:5%;">No</th>
+                  <th style="width:15%;">이름</th>
+                  <th style="width:25%;">학교</th>
+                  <th style="width:10%;">학년</th>
+                  <th style="width:10%;">성별</th>
+                  <th style="width:25%;">전화번호</th>
+                  <th style="width:15%;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="studentBody">
+                <tr><td colspan="7" class="state-row">로딩중…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="msg" class="list-msg" hidden></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/toast.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/combobox.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="student.new.js"></script>
+
+</body>
+</html>

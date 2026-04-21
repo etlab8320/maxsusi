@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko" class="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>대학별 내신/등급 입력 — 맥스수시엔진</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+<!-- 공용 자산 CSS -->
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/sidebar.css">
+<link rel="stylesheet" href="assets/css/topbar.css">
+<link rel="stylesheet" href="assets/css/buttons.css">
+<link rel="stylesheet" href="assets/css/toast.css">
+<link rel="stylesheet" href="assets/css/modal.css">
+<link rel="stylesheet" href="assets/css/combobox.css">
+<link rel="stylesheet" href="college-grade.new.css">
+</head>
+
+<body data-page="college-grade" data-title="대학별 내신/등급 입력" data-category="학생·성적">
+
+<div class="app-shell" id="appShell">
+  <div id="sidebar-slot"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="page-path">
+        <span>학생·성적</span>
+        <span class="sep">/</span>
+        <span class="current">대학별 내신/등급 입력</span>
+      </div>
+      <div class="topbar-actions">
+        <span class="chip ghost" id="branchChip" hidden><i class="ph-light ph-storefront"></i><span id="branchChipText">—</span></span>
+      </div>
+    </header>
+
+    <section class="page-content">
+      <!-- 필터 바: 대학 검색 + 학생 페이지네이션 + 학생 검색 -->
+      <div class="grade-toolbar">
+        <div class="tb-left">
+          <input type="text" id="searchInput" class="tb-input" placeholder="대학명, 학과명, 전형명으로 검색">
+        </div>
+        <div class="tb-right">
+          <button type="button" class="btn btn-ghost" id="prevPageBtn">
+            <i class="ph-light ph-caret-left"></i><span>이전 학생들</span>
+          </button>
+          <span class="page-info" id="pageInfo">페이지 1 / 1</span>
+          <button type="button" class="btn btn-ghost" id="nextPageBtn">
+            <span>다음 학생들</span><i class="ph-light ph-caret-right"></i>
+          </button>
+          <span class="tb-sep"></span>
+          <input type="text" id="studentSearchInput" class="tb-input tb-input-sm" placeholder="학생 이름으로 검색">
+          <button type="button" class="btn btn-ghost" id="studentSearchBtn">
+            <i class="ph-light ph-magnifying-glass"></i><span>검색</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 매트릭스 뷰 -->
+      <div class="card grade-card">
+        <div class="table-scroll">
+          <table class="grade-table" id="gradeTable">
+            <thead id="tableHead"></thead>
+            <tbody id="tableBody">
+              <tr><td colspan="4" class="state-row">로딩중…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="msg" class="grade-msg" hidden></div>
+    </section>
+  </div>
+</div>
+
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/toast.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/combobox.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+<script src="college-grade.new.js"></script>
+
+</body>
+</html>

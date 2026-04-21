@@ -88,9 +88,8 @@ try {
           value: currentYear,
           placeholder: '연도',
           options: [
-            { value: '28', label: '28학년도', meta: '2028' },
-            { value: '27', label: '27학년도', meta: '2027' },
-            { value: '26', label: '26학년도', meta: '현재' },
+            { value: '27', label: '27학년도', meta: '현재' },
+            { value: '26', label: '26학년도', meta: '지난해' },
           ],
           onChange: function (v) {
             if (window.setSusiYear && window.setSusiYear(v)) {

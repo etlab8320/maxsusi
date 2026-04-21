@@ -11,9 +11,12 @@
   var LOGIN_PAGE = 'login.html';
   var TOKEN_KEY = 'token';
   var YEAR_KEY = 'susi_year';
-  var VALID_YEARS = ['26', '27', '28'];
+  // DB: 26susi(지난해), 27susi(현재). 28susi 존재하지 않음.
+  var VALID_YEARS = ['26', '27'];
+  var DEFAULT_YEAR = '27';
 
-  window.SUSI_YEAR = localStorage.getItem(YEAR_KEY) || '26';
+  var storedYear = localStorage.getItem(YEAR_KEY);
+  window.SUSI_YEAR = (storedYear && VALID_YEARS.indexOf(storedYear) !== -1) ? storedYear : DEFAULT_YEAR;
 
   window.getSusiYear = function () { return window.SUSI_YEAR; };
 

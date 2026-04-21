@@ -278,9 +278,17 @@
       `<td class="c"><input type="text" class="input-grade" placeholder="—"></td>` +
       `<td class="c"><input type="text" class="input-score" placeholder="—"></td>` +
       `<td class="c"><span class="ro-val input-total-score">—</span></td>` +
-      `<td class="num-v"><span class="score-cell"><span class="ro-val 합산점수">—</span></span></td>` +
-      `<td class="num-v"><span class="score-cell"><span class="ro-val max-cut">—</span><span class="delta delta-max"></span></span></td>` +
-      `<td class="num-v"><span class="score-cell"><span class="ro-val branch-cut">—</span><span class="delta delta-branch"></span></span></td>` +
+      `<td class="num-v">` +
+        `<span class="score-cell score-cell--total">` +
+          `<span class="ro-val 합산점수">—</span>` +
+          `<span class="delta-pair">` +
+            `<span class="delta delta-max" title="맥스컷 대비"></span>` +
+            `<span class="delta delta-branch" title="지점컷 대비"></span>` +
+          `</span>` +
+        `</span>` +
+      `</td>` +
+      `<td class="num-v"><span class="ro-val max-cut">—</span></td>` +
+      `<td class="num-v"><span class="ro-val branch-cut">—</span></td>` +
       `<td class="c"><button type="button" class="del-btn" data-action="del" title="행 삭제"><i class="ph-light ph-trash"></i></button></td>`;
     group.appendChild(main);
 
@@ -462,7 +470,9 @@
     }
     const collegeID = getCollegeID(colValue, majorValue, typeValue);
     const matched = colleges.find(c => c.대학ID === collegeID);
-    group.querySelector('.max-cut').textContent = matched?.['26맥스예상컷'] ?? '—';
+    // 연도별 컬럼명 (DB: 27susi.대학정보 → 27맥스예상컷)
+    const yearKey = `${window.SUSI_YEAR || '27'}맥스예상컷`;
+    group.querySelector('.max-cut').textContent = matched?.[yearKey] ?? matched?.['맥스예상컷'] ?? '—';
     group.querySelector('.branch-cut').textContent = matched?.['지점예상컷'] ?? '—';
     const practical_id = matched?.실기ID;
     const student_id = getSelectedStudentId();

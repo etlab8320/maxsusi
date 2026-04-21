@@ -70,12 +70,16 @@ html.dark {
   margin-top: 4px;
 }
 
-/* ===== profile + summary strip ===== */
+/* ===== profile strip ===== */
 .profile-strip {
   display: grid;
   grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
   gap: 14px;
   margin-bottom: 14px;
+}
+/* summary-card 제거 시 프로필 카드를 좌측 정렬, 최대폭 제한 */
+.profile-strip--solo {
+  grid-template-columns: minmax(0, 720px);
 }
 .profile-card {
   background: var(--surface);
@@ -617,7 +621,7 @@ html.dark {
   color: var(--text);
   min-width: 0;
 }
-/* 합산·맥스컷·지점컷 셀: ro-val + delta pill 가로 배치 */
+/* 합산 셀: 합산 값 + 두 delta (맥스/지점 대비) 세로 스택 */
 .score-cell {
   display: inline-flex;
   align-items: center;
@@ -628,8 +632,29 @@ html.dark {
   font-family: 'Geist Mono', ui-monospace, monospace;
   font-variant-numeric: tabular-nums;
 }
-.score-cell .ro-val { flex: 1 1 auto; text-align: right; }
-.score-cell .delta  { flex: 0 0 auto; }
+/* 합산 셀: flex 말고 block+text-align 으로 우측 정렬 보장 */
+.score-cell--total {
+  display: block;
+  text-align: right;
+  width: 100%;
+  line-height: 1.2;
+}
+.score-cell--total .ro-val {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+.delta-pair {
+  display: block;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+.delta-pair .delta + .delta { margin-left: 4px; }
+/* delta chip: M/B 라벨 prefix 로 맥스/지점 구분 */
+.delta.delta-max::before  { content: 'M'; opacity: 0.55; margin-right: 3px; font-weight: 500; }
+.delta.delta-branch::before { content: 'B'; opacity: 0.55; margin-right: 3px; font-weight: 500; }
+.delta:empty { display: none; }
 .ct tbody td.num-v { padding-right: 10px; }
 
 .gam-span {

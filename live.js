@@ -66,12 +66,7 @@
     // 버튼 바인딩
     document.getElementById('btnExcel').addEventListener('click', downloadAllExcel);
     document.getElementById('btnScoreTable').addEventListener('click', showScoreTable);
-    document.querySelectorAll('[data-action="modal-close"]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const bd = btn.closest('.modal-backdrop');
-        if (bd) bd.classList.remove('show');
-      });
-    });
+    /* [data-action="modal-close"] 는 공용 modal.js v2 가 전역 delegation 처리 */
 
     try {
       const [profileRes, collegeRes, practicalRes] = await Promise.all([

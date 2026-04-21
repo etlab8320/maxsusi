@@ -132,14 +132,7 @@
   border-color: color-mix(in srgb, var(--danger) 24%, transparent);
 }
 
-/* ---- Modal footer (확인/취소) ---- */
-.modal-foot {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 14px 22px 18px;
-  border-top: 1px solid var(--border-soft);
-}
+/* .modal-foot 는 공용 assets/css/modal.css v2 에서 관리 */
 
 @media (max-width: 720px) {
   .page-content { padding: 14px 16px 40px; }

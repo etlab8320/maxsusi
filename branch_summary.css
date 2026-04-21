@@ -225,17 +225,7 @@ details.uni-card summary:hover { background: var(--surface-2); }
   font-weight: 600;
 }
 
-.modal-close {
-  background: transparent;
-  border: 0;
-  color: var(--text-3);
-  cursor: pointer;
-  padding: 4px;
-  font-size: 18px;
-  border-radius: 6px;
-  transition: background 140ms var(--ease);
-}
-.modal-close:hover { background: var(--surface-2); color: var(--text); }
+/* .modal-close 는 공용 assets/css/modal.css v2 에서 관리 */
 
 .unassigned-body p {
   margin: 0 0 10px;

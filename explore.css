@@ -201,24 +201,7 @@
   box-shadow: 0 0 0 3px var(--accent-ring);
 }
 
-.modal-close {
-  background: transparent;
-  border: 0;
-  color: var(--text-3);
-  cursor: pointer;
-  padding: 4px;
-  font-size: 18px;
-  border-radius: 6px;
-  transition: background 140ms var(--ease);
-}
-.modal-close:hover { background: var(--surface-2); color: var(--text); }
-.modal-foot {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 14px 22px 18px;
-  border-top: 1px solid var(--border-soft);
-}
+/* .modal-close / .modal-foot 는 공용 assets/css/modal.css v2 에서 관리 */
 
 @media (max-width: 900px) {
   .page-content { padding: 14px 16px 40px; }

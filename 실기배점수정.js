@@ -183,9 +183,7 @@
   function bindModal() {
     var modal = document.getElementById('confirmModal');
     if (!modal) return;
-    modal.querySelectorAll('[data-action="modal-close"]').forEach(function (el) {
-      el.addEventListener('click', function () { window.closeModal('confirmModal'); });
-    });
+    /* [data-action="modal-close"] 는 공용 modal.js v2 가 전역 delegation 처리 */
     var saveBtn = document.getElementById('confirmSaveBtn');
     if (saveBtn) {
       saveBtn.addEventListener('click', async function () {

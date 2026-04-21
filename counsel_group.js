@@ -160,6 +160,7 @@
     currentCollege = colleges.find(col => col.대학명 === c && col.학과명 === m && col.전형명 === t);
     if (!currentCollege) return;
     document.getElementById('btnScoreTable').disabled = !currentCollege.실기ID;
+    document.getElementById('btnAddStudent').disabled = false;
 
     showLoading('조회 중...');
     const titleEl = document.getElementById('resultTitle');

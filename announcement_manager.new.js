@@ -31,7 +31,8 @@
     }
     try {
       var json = await window.api('/profile');
-      if (!json || !json.success || !json.user || json.user.userid !== 'admin') {
+      var u = json && json.user;
+      if (!json || !json.success || !u || (u.role !== 'admin' && u.userid !== 'admin')) {
         window.showToast('관리자 계정만 접근 가능합니다.', 'error');
         setTimeout(function () { location.href = 'index.html'; }, 900);
         return false;

@@ -35,7 +35,8 @@
   async function checkAdmin() {
     try {
       var data = await window.api(PROFILE_PATH);
-      var ok = !!(data && data.success && data.user && data.user.userid === 'admin');
+      var u = data && data.user;
+      var ok = !!(data && data.success && u && (u.role === 'admin' || u.userid === 'admin'));
       if (!ok) {
         if (window.showToast) window.showToast('관리자 계정으로만 접근 가능합니다', 'error');
         setTimeout(function () { location.href = 'login.html'; }, 1200);

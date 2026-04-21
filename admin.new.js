@@ -21,7 +21,9 @@
     }
     try {
       var json = await window.api('/profile');
-      if (!json || !json.success || !json.user || json.user.userid !== 'admin') {
+      // role === 'admin' 우선, userid 는 하위호환 폴백
+      var u = json && json.user;
+      if (!json || !json.success || !u || (u.role !== 'admin' && u.userid !== 'admin')) {
         window.showToast('관리자 계정으로만 접근 가능합니다', 'error');
         window.clearToken();
         setTimeout(function () {
